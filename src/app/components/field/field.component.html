@@ -1,0 +1,7 @@
+<div class="board">
+    <div *ngFor="let row of board">
+        <div *ngFor="let tile of row">
+            <app-tile [value]="tile"></app-tile>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+.tile {
+    display: grid;
+    place-items: center;
+
+    width: 25px;
+    height: 25px;
+    border: 1px solid rgb(78, 78, 78);
+    background-color: rgb(30, 29, 29);
+}
+
+.tile:hover {
+    filter: brightness(2);
+    transform: scale(1.15);
+    cursor: pointer;
+}
+
+.tile-1 { color: #7674ff;}
+.tile-2 { color: #4cd248;}
+.tile-3 { color: #ff3c00;}
+.tile-4 { color: #234cac;}
+.tile-5 { color: #d24646;}
+.tile-6 { color: #b960f9;}
+.tile-7 { color: #cdcdcd;}
+.tile-8 { color: #6a6a6a;}
