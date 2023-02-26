@@ -5,7 +5,9 @@
     width: 25px;
     height: 25px;
     border: 1px solid rgb(78, 78, 78);
-    background-color: rgb(30, 29, 29);
+    background-color: rgb(26, 25, 25);
+    box-sizing: border-box;
+    user-select: none;
 }
 
 .tile:hover {
@@ -14,6 +16,11 @@
     cursor: pointer;
 }
 
+.tile-0 {
+    color: #434242;
+    background-color: #262626;
+    border: none;
+}
 .tile-1 { color: #7674ff;}
 .tile-2 { color: #4cd248;}
 .tile-3 { color: #ff3c00;}

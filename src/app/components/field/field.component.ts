@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { GameStatus } from './GameStatus';
+import { Tile, TileStatus } from './Tile';
 
 @Component({
   selector: 'app-field',
@@ -7,11 +9,40 @@ import { Component } from '@angular/core';
 })
 export class FieldComponent {
   size: number = 10;
-  mineCount: number = 10;
-  board: string[][] = [];
+  mineCount: number = 8;
+  board: Tile[][] = [];
+
+  sizeControl: number = this.size;
+  mineControl: number = this.mineCount;
+
+  status: GameStatus = 'playing';
+  
 
   constructor() {
     this.initBoard();
+  }
+
+  changeSize(numb: number): void {
+    if(this.sizeControl+numb > 4 && this.sizeControl+numb <= 20) {
+      this.sizeControl += numb;
+    }
+    let maxMines = this.sizeControl*this.sizeControl - 1;
+    if(this.mineControl > maxMines) {
+      this.mineControl = maxMines;
+    }
+  }
+
+  changeMineCount(numb: number): void {
+    let maxMines = this.sizeControl*this.sizeControl - 1;
+    if(this.mineControl+numb >= 2 && this.mineControl+numb <= maxMines) {
+      this.mineControl += numb;
+    } 
+  }
+
+  setNewBoard(): void {
+    this.size = this.sizeControl;
+    this.mineCount = this.mineControl;
+    this.resetGame();
   }
 
   initBoard(): void {
@@ -20,11 +51,66 @@ export class FieldComponent {
     this.generateClues();
   }
 
+  resetGame(): void {
+    this.board = [];
+    this.status = 'reset';
+    setTimeout(() => {this.status = 'playing';}, 500);
+
+    this.initBoard();
+  }
+
+  openTile(x: number, y:number): void {
+    const tile = this.board[x][y];
+    if(tile.status !== 'flagged') {
+      tile.status = 'visible';
+      if(tile.value === '0') {
+        this.openAdjacentTiles(x, y);
+      }
+  
+      if(tile.value === '💣') {
+        this.status = 'lost';
+        this.revealMines();
+      } else if (this.isSolved()) {
+        this.status = 'won';  
+      }
+    }
+
+  }
+
+  placeFlag(e: Event, x:number, y:number): void {
+    e.preventDefault();
+    const tile = this.board[x][y];
+    if(tile.status === 'hidden') {
+      if(this.countTilesByStatus('flagged') < this.mineCount) {
+        tile.status = 'flagged';
+      }
+    } else if(tile.status === 'flagged') (
+      tile.status = 'hidden'
+    )
+
+  }
+
+  isSolved(): boolean {
+    return this.size * this.size - this.countTilesByStatus('visible') === this.mineCount;
+  }
+
+  countTilesByStatus(status: TileStatus): number {
+    let count = 0;
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
+        if (this.board[i][j].status === status) {
+          count++;
+        }
+      }
+    }
+    return count;
+  }
+
   generateBoard(): void {
     for (let i = 0; i < this.size; i++) {
       this.board.push([]);
       for (let j = 0; j < this.size; j++) {
-        this.board[i][j] = "0";
+        this.board[i].push({ value: "0", status: "hidden"});
       }
     }
   }
@@ -34,8 +120,8 @@ export class FieldComponent {
     while (mines < this.mineCount) {
       let x = Math.floor(Math.random() * this.size);
       let y = Math.floor(Math.random() * this.size);
-      if (this.board[x][y] !== "💣") {
-        this.board[x][y] = "💣";
+      if (this.board[x][y].value !== "💣") {
+        this.board[x][y].value = "💣";
         mines++;
       }
     }
@@ -44,8 +130,8 @@ export class FieldComponent {
   generateClues(): void {
     for (let i = 0; i < this.size; i++) {
       for (let j = 0; j < this.size; j++) {
-        if (this.board[i][j] !== "💣") {
-          this.board[i][j] = `${this.countAdjacentMines(i, j)}`;
+        if (this.board[i][j].value !== "💣") {
+          this.board[i][j].value = `${this.countAdjacentMines(i, j)}`;
         }
       }
     }
@@ -59,7 +145,7 @@ export class FieldComponent {
         for (let j = -1; j <= 1; j++) {
           let actCol = y + j;
           if (actCol >= 0 && actCol < this.size) {
-            if (this.board[actRow][actCol] === "💣") {
+            if (this.board[actRow][actCol].value === "💣") {
               count++;
             }
           }
@@ -67,6 +153,32 @@ export class FieldComponent {
       }
     }
     return count;
+  }
+
+  revealMines(): void {
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
+        if (this.board[i][j].value === "💣") {
+          this.board[i][j].status = "visible";
+        }
+      }
+    }
+  }
+
+  openAdjacentTiles(x: number, y: number): void {
+    for (let i = -1; i <= 1; i++) {
+      let actRow = x + i;
+      if (actRow >= 0 && actRow < this.size) {
+        for (let j = -1; j <= 1; j++) {
+          let actCol = y + j;
+          if (actCol >= 0 && actCol < this.size) {
+            if(this.board[actRow][actCol].status === "hidden") {
+              this.openTile(actRow, actCol);
+            }
+          }
+        }
+      }
+    }
   }
 
 }

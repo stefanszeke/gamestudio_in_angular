@@ -1,6 +1,101 @@
 .board {
+    position: relative;
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
+    // grid-template-columns: repeat(10, 1fr);
     width: fit-content;
+    box-shadow: 0px 0px 8px 3px rgb(25, 25, 25);
+    border-radius: 4px;
+
 }
 
+.game {
+    display: grid;
+    grid-auto-flow: row;
+    grid-gap: 20px;
+    justify-items: center;
+}
+
+.box {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    grid-gap: 30px;
+    margin-top: 10px;
+
+    padding: 15px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    background-color: rgb(20, 20, 20);
+    box-shadow: 0px 0px 5px 3px rgb(25, 25, 25);
+    border: 1px solid rgb(49, 49, 49);
+    color: rgb(238, 143, 0);
+    border-radius: 6px;
+
+    user-select: none;
+}
+
+.box-item {
+    display: grid;
+    grid-template-columns: 1fr 25px 23px 23px;
+    gap: 4px;
+    align-items: center;
+}
+
+.box-numb {
+    text-align: right;
+    color: white;
+    background-color: rgb(40, 39, 39);
+    border: 1px solid rgb(86, 56, 22);
+    border-radius: 4px;
+    padding: 2px;
+}
+
+.status-item {
+    display: grid;
+    grid-template-columns: 1fr 80px;
+    gap: 4px;
+    align-items: center;
+}
+
+
+
+.btn-field {
+    background-color: rgb(48, 48, 48);
+    border: 1px solid rgb(96, 96, 96);
+    border-radius: 4px;
+    padding: 4px;
+    min-width: 25px;
+    width: fit-content;
+    color: rgb(212, 171, 48);
+    transition: 90ms;
+}
+
+.btn-field:hover {
+    filter: brightness(1.2);
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.overlay {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    color: white;
+    font-size: 1.5rem;
+    user-select: none;
+}
+
+.lose-screen {
+    background-color: rgba(149, 36, 36, 0.5);
+}
+
+.win-screen {
+    background-color: rgba(36, 149, 66, 0.5);
+}
+
+.reset-screen {
+    background-color: rgba(36, 60, 149, 0.5);
+}
