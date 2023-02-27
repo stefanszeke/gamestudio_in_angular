@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { TimerComponent } from '../timer/timer.component';
 import { GameStatus } from './GameStatus';
 import { Tile, TileStatus } from './Tile';
 
@@ -15,12 +16,16 @@ export class FieldComponent {
   sizeControl: number = this.size;
   mineControl: number = this.mineCount;
 
-  status: GameStatus = 'playing';
+  status: GameStatus = 'paused';
+
+  @ViewChild(TimerComponent) timerComponent: any;
+  timer: string = '00m:00s:000ms';
   
 
   constructor() {
     this.initBoard();
   }
+
 
   changeSize(numb: number): void {
     if(this.sizeControl+numb > 4 && this.sizeControl+numb <= 20) {
@@ -51,15 +56,31 @@ export class FieldComponent {
     this.generateClues();
   }
 
+
+  // timer
+  setTime($event: string): void { this.timer = $event; }
+  startTime(): void { this.timerComponent.startTimer(); }
+  pauseTime(): void { this.timerComponent.pauseTimer(); }
+  resetTime(): void { this.timerComponent.resetTimer(); }
+
+  getScore() {
+    
+  }
+
   resetGame(): void {
     this.board = [];
     this.status = 'reset';
-    setTimeout(() => {this.status = 'playing';}, 500);
+    this.resetTime();
+    setTimeout(() => {this.status = 'paused';}, 500);
 
     this.initBoard();
   }
 
   openTile(x: number, y:number): void {
+    if(this.status === 'paused') {
+      this.status = 'playing';
+      this.startTime();
+    }
     const tile = this.board[x][y];
     if(tile.status !== 'flagged') {
       tile.status = 'visible';
@@ -69,9 +90,11 @@ export class FieldComponent {
   
       if(tile.value === '💣') {
         this.status = 'lost';
+        this.pauseTime();
         this.revealMines();
       } else if (this.isSolved()) {
         this.status = 'won';  
+        this.pauseTime();
       }
     }
 
