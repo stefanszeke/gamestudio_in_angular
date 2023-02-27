@@ -18,7 +18,7 @@
     <div class="status box">
         <div class="status-item">
             <span class="box-text">✅Status: </span>
-            <span class="box-numb"> {{countTilesByStatus('visible')}} / {{size*size}} </span>
+            <span class="box-numb"> {{countTilesByStatus('visible')}} / {{size*size-mineCount}} </span>
         </div>
         <div class="timer">
             <app-timer (onSendTime)="setTime($event)"></app-timer>
