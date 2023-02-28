@@ -21,7 +21,7 @@
             <span class="box-numb"> {{countTilesByStatus('visible')}} / {{size*size-mineCount}} </span>
         </div>
         <div class="timer">
-            <app-timer (onSendTime)="setTime($event)"></app-timer>
+            <app-timer (onSendTime)="setTime($event)" (onSendMili)="setScore($event)"></app-timer>
         </div>
         <div class="status-item">
             <span class="box-text">🚩Flags: </span>
@@ -36,7 +36,7 @@
             </div>
         </div>
         <div *ngIf="status === 'lost'" class="overlay lose-screen">YOU lOST</div>
-        <div *ngIf="status === 'won'" class="overlay win-screen">YOU WON</div>
+        <div *ngIf="status === 'won'" class="overlay win-screen">YOU WON <p>score:</p> <h3>{{this.score}}</h3> </div>
         <div *ngIf="status === 'reset'" class="overlay reset-screen">Resetting</div>
     </div>
 

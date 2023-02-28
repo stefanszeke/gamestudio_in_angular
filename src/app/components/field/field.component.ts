@@ -20,6 +20,8 @@ export class FieldComponent {
 
   @ViewChild(TimerComponent) timerComponent: any;
   timer: string = '00m:00s:000ms';
+
+  score: number = 0;
   
 
   constructor() {
@@ -63,9 +65,10 @@ export class FieldComponent {
   pauseTime(): void { this.timerComponent.pauseTimer(); }
   resetTime(): void { this.timerComponent.resetTimer(); }
 
-  getScore() {
-    
+  setScore($event: number) {
+    this.score = (this.size + this.size) * this.mineCount - Math.floor($event/1000);
   }
+
 
   resetGame(): void {
     this.board = [];

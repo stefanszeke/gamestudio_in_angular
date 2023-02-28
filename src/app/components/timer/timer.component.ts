@@ -7,6 +7,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class TimerComponent {
   @Output() onSendTime = new EventEmitter<string>();
+  @Output() onSendMili = new EventEmitter<number>();
 
   ml: number = 0;
   display: string = "00m:00s:000ms"
@@ -18,6 +19,10 @@ export class TimerComponent {
     this.onSendTime.emit(this.display)
   }
 
+  sendMiliToParent() {
+    this.onSendMili.emit(this.ml)
+  }
+
   startTimer() {
     clearInterval(this.timerInterval)
     this.lastUpdated = performance.now()
@@ -27,6 +32,7 @@ export class TimerComponent {
   }
 
   pauseTimer() {
+    this.sendMiliToParent()
     clearInterval(this.timerInterval)
   }
 
