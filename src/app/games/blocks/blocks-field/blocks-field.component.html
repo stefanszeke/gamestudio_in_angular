@@ -1,0 +1,21 @@
+
+<div class="box">
+    <h2>Score: {{score}}</h2>
+    <h1>BLOCKS</h1>
+    <button (click)="resetGame()">Reset</button>
+</div>
+
+<div class="blocksField">
+    <div class="blocksrow" *ngFor="let block of board[0]; let j = index">
+      <div *ngFor="let row of board; let i = index">
+        <app-blocks-tile (click)="tryToClearBlock(i,j)" [color]="row[j].color"></app-blocks-tile>
+      </div>
+    </div>
+    <div *ngIf="status === 'lost'" class="overlay lose-screen">YOU lOST</div>
+    <div *ngIf="status === 'won'" class="overlay win-screen">YOU WON <p>score:</p> <h3>{{score}}</h3> </div>
+    <div *ngIf="status === 'reset'" class="overlay reset-screen">Resetting</div>
+</div>
+  
+
+
+<!-- [ngStyle]="{'grid-template-columns': 'repeat('+15+', 1fr)'}" -->

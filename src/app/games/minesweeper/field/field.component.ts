@@ -1,7 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
+
+import { Score } from 'src/app/model/Score';
 import { TimerComponent } from '../timer/timer.component';
 import { GameStatus } from './GameStatus';
 import { Tile, TileStatus } from './Tile';
+import { Store } from '@ngrx/store';
+import { ScoreActions } from 'src/app/state/score/score.actions';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-field',
@@ -22,10 +27,15 @@ export class FieldComponent {
   timer: string = '00m:00s:000ms';
 
   score: number = 0;
-  
+  scoreSubmitted: boolean = false;
 
-  constructor() {
+
+
+  constructor(private store: Store) {}
+
+  ngOnInit(): void {
     this.initBoard();
+    this.store.dispatch(ScoreActions.loadTopScoresByGame({game: 'Minesweeper'}));
   }
 
 
@@ -75,7 +85,7 @@ export class FieldComponent {
     this.status = 'reset';
     this.resetTime();
     setTimeout(() => {this.status = 'paused';}, 500);
-
+    this.scoreSubmitted = false;
     this.initBoard();
   }
 
@@ -98,10 +108,22 @@ export class FieldComponent {
       } else if (this.isSolved()) {
         this.status = 'won';  
         this.pauseTime();
+
+        if(!this.scoreSubmitted) { // check if score is already submitted, otherwise it will be submitted multiple times, because of the recursive call of openAdjacentTiles()
+          this.submitScore();
+        }
+
       }
     }
 
   }
+
+  submitScore(): void {
+    const newScore: Score = { game: 'Minesweeper', player: "frontend_player", points: this.score };
+    this.store.dispatch(ScoreActions.postScoreAndGetScore({score: newScore}));
+    this.scoreSubmitted = true;
+  }
+
 
   placeFlag(e: Event, x:number, y:number): void {
     e.preventDefault();

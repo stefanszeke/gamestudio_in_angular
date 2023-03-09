@@ -1,0 +1,21 @@
+
+<div class="score-table-wrapper">
+<h2>{{(topScores$ | async)?.[0]?.game}}</h2>
+<table class="score-table">
+    <thead>
+        <tr>
+            <th>Player</th>
+            <th>Points</th>
+            <th>Played on</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let score of (topScores$ | async)">
+            <td>{{score.player}}</td>
+            <td>{{score.points}}</td>
+            <td>{{score.playedon}}</td>
+        </tr>
+
+</table>
+</div>

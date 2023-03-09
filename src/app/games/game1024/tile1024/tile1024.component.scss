@@ -1,0 +1,33 @@
+.tile {
+    display: grid;
+    place-items: center;
+
+    width: 100px;
+    height: 100px;
+    border: 1px solid rgb(78, 78, 78);
+    background-color: rgb(26, 25, 25);
+    box-sizing: border-box;
+    user-select: none;
+
+    font-size: 2.5rem;
+    color: white;
+}
+
+
+
+.tile-0 {
+    color: #434242;
+    background-color: #262626;
+    border: none;
+}
+.tile-1 { background-color: #3a424f;}
+.tile-2 { background-color: #3b4360;}
+.tile-4 { background-color: #323368;}
+.tile-8 { background-color: #2e2371;}
+.tile-16 { background-color: #63412d;}
+.tile-32 { background-color: #724928;}
+.tile-64 { background-color: #b97a1b;}
+.tile-128 { background-color: #525e3f;}
+.tile-256 { background-color: #587141;}
+.tile-512 { background-color: #5c8734;}
+.tile-1024 { background-color: #a343b0;}
