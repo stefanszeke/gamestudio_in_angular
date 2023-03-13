@@ -102,3 +102,10 @@
 .reset-screen {
     background-color: rgba(36, 60, 149, 0.5);
 }
+
+@media (max-width: 450px) {
+    .box {
+        grid-auto-flow: row;
+        gap: 2px;
+    }
+}

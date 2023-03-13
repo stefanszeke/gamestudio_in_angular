@@ -4,3 +4,10 @@
     text-align: right;
     line-height: 0px;
 }
+
+@media (hover:none) and (max-width: 768px){
+    .mili {
+        display: none;
+    }
+}
+

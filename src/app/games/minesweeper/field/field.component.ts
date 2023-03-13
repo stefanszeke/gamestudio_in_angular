@@ -40,7 +40,7 @@ export class FieldComponent {
 
 
   changeSize(numb: number): void {
-    if(this.sizeControl+numb > 4 && this.sizeControl+numb <= 20) {
+    if(this.sizeControl+numb > 4 && this.sizeControl+numb <= 17) {
       this.sizeControl += numb;
     }
     let maxMines = this.sizeControl*this.sizeControl - 1;
