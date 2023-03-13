@@ -25,6 +25,10 @@
         font-size: 2rem;
         cursor: pointer;
     }
+    .menu-toggle:hover {
+        color: #ff0073;
+        transform: scale(1.1);
+    }
     .title {
         padding: 0;
         margin: 0;
@@ -85,6 +89,9 @@
             border: 1px solid rgb(96, 96, 96);
             padding: 5px 15px;
             border-radius: 4px;
+        }
+        a:hover {
+            border: 1px solid #ff0073;
         }
     }   
 }
