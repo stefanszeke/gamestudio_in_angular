@@ -31,3 +31,11 @@
 .tile-256 { background-color: #587141;}
 .tile-512 { background-color: #5c8734;}
 .tile-1024 { background-color: #a343b0;}
+
+@media (max-width: 500px) {
+    .tile {
+        width: 50px;
+        height: 50px;
+    }
+}
+    

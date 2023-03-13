@@ -13,8 +13,13 @@
     <div *ngIf="gameStatus === 'lost'" class="overlay lose-screen">YOU lOST</div>
     <div *ngIf="gameStatus === 'won'" class="overlay win-screen">YOU WON <p>in</p> <p>{{moveCount}}</p> <p>moves</p> </div>
     <div *ngIf="gameStatus === 'reset'" class="overlay reset-screen">Resetting</div>
-</div>
 
+    <div class="move move-up" (click)="dispatchKeyboardEvent('w')">▲</div>
+    <div class="move move-left" (click)="dispatchKeyboardEvent('a')">◄</div>
+    <div class="move move-down" (click)="dispatchKeyboardEvent('s')">▼</div>
+    <div class="move move-right" (click)="dispatchKeyboardEvent('d')">►</div>
+</div>
+<h4 style="color: white;">use [WASD] to move or the arrows</h4>
 <p>shift click to add value (use for debugging only !)</p>
 
 </div>

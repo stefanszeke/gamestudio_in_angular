@@ -370,4 +370,10 @@ export class Game1024Component {
     }
   }
 
+  //
+  dispatchKeyboardEvent(key: string): void {
+    const event = new KeyboardEvent('keydown', {key});
+    document.dispatchEvent(event);
+  }
+
 }

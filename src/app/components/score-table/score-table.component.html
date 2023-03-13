@@ -1,5 +1,5 @@
 
-<div class="score-table-wrapper">
+<div *ngI="(topScores$ | async)?.length > 0" class="score-table-wrapper">
 <h2>{{(topScores$ | async)?.[0]?.game}}</h2>
 <table class="score-table">
     <thead>
@@ -18,4 +18,8 @@
         </tr>
 
 </table>
+</div>
+
+<div *ngIf="(topScores$ | async)?.length === 0" class="score-table-wrapper">
+    <h2>no database connection</h2>
 </div>
