@@ -1,11 +1,15 @@
 .tile {
+  position: relative;
   width: 30px;
   height: 30px;
   border: 2px solid rgba(255, 255, 255, 0.5);
   border-bottom: 4px solid #3d3d3d;
   border-left: 3px solid rgba(137, 47, 92, 0.5);
-  background-color: #727272;
   border-radius: 8px;
+
+  background-color: #727272;
+  box-shadow: 5px 5px 3px 4px #0000006f;
+
   display: grid;
   place-items: center;
 
@@ -14,6 +18,7 @@
   color: white;
   font-weight: 700;
   user-select: none;
+  z-index: 2;
 }
 
 .tile-hidden:hover {
@@ -26,6 +31,9 @@
   color: #434242;
   background-color: #262626;
   border: none;
+  box-shadow: none;
+  z-index: 0;
+  opacity: 0.5;
 }
 
 
