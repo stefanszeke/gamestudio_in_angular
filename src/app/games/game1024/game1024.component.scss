@@ -4,7 +4,7 @@
 }
 
 .gameBoard {
-    margin: 50px auto;
+    margin: 15px auto;
     position: relative;
     display: grid;
     // grid-template-columns: repeat(10, 1fr);
@@ -89,30 +89,114 @@
     opacity: 0.3;
     user-select: none;
 }
-.move:hover {
-    opacity: 0.5;
-    cursor: pointer;
-}
-.move-up {
-    top: -40px;
-    width: 100%;
-    height: 40px;
-}
-.move-down {
-    bottom: -40px;
-    width: 100%;
-    height: 40px;
-}
-.move-left {
-    left: -40px;
-    width: 40px;
-    height: 100%;
+
+
+
+.controls {
+  position: relative;
+  margin: 10px auto;
+  margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  width: 300px;
 
 }
-.move-right {
-    right: -40px;
-    width: 40px;
-    height: 100%;
+
+.control-btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+
+  width: 100px;
+  height: 100px;
+
+  font-size: 4rem;
+  border: 2px solid rgb(104, 104, 104);
+  background-color: rgb(12, 13, 14);
+  color: white;
+  transition: 90ms;
+  overflow: hidden;
+
+}
+
+.control-btn::before {
+  position: absolute;
+  content: '';
+
+  width: 90%;
+  height: 90%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border: 1px solid rgb(32, 32, 32);
+  background-color: rgb(10, 10, 10);
+  border-radius: 100%;
+  opacity: 0.5;
+  transition: 60ms;
+}
+
+.control-btn:hover::before {
+  width: 70%;
+  height: 70%;
+}
+
+.control-btn:hover {
+  cursor: pointer;
+  transform: scale(0.95);
+  background-color: rgb(45, 44, 44);
+  font-size: 2rem;
+}
+
+.btn-empty {
+  grid-column: 2;
+  grid-row: 2;
+  border: none;
+  font-size: 1.5rem;
+  color: rgb(72, 72, 72);
+}
+
+.btn-empty:hover {
+  background-color: rgb(12, 13, 14);
+  transform: none;
+  cursor: default;
+}
+
+.btn-empty::before {
+  display: none;
+}
+
+.btn-empty:hover::before {
+  background-color: rgb(46, 46, 46);
+}
+
+.btn-up {
+  grid-column: 2;
+  grid-row: 1;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+}
+
+.btn-left {
+  grid-column: 1;
+  grid-row: 2;
+  border-right: none;
+  border-radius: 6px 0 0 6px;
+}
+
+.btn-right {
+  grid-column: 3;
+  grid-row: 2;
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+}
+
+.btn-down {
+  grid-column: 2;
+  grid-row: 3;
+  border-top: none;
+  border-radius: 0 0 6px 6px;
 }
 
 @media (max-width: 500px) {

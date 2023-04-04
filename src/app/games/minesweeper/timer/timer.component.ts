@@ -50,8 +50,9 @@ export class TimerComponent {
     this.ml += time
     let minutes = Math.floor(this.ml / 60000).toString().padStart(2,"0")
     let seconds = Math.floor((this.ml % 60000 )/1000).toString().padStart(2,"0")
-    let mili =  (this.ml % 1000).toString().padStart(3,"0")
-    this.display = (minutes+"m:")+(seconds+"s:")+(mili+"ms")
+
+    let mili = (this.ml % 1000)
+    this.display = (minutes + "m:") + (seconds + "s:") + ((+mili).toFixed(0).padStart(3,"0") + "ms")
     this.sendTimeToParent()
   }
 

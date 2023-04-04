@@ -14,7 +14,6 @@ export class Tile1024Component {
   getStyle(): string {
     if(!this.hidden) {
       switch (this.value) {
-        case 0 : return 'tile tile-0';
         case 1 : return 'tile tile-1';
         case 2 : return 'tile tile-2';
         case 4 : return 'tile tile-4';
@@ -27,8 +26,10 @@ export class Tile1024Component {
         case 512 : return 'tile tile-512';
         case 1024 : return 'tile tile-1024';
         default: return 'tile';
-      }
-    } 
+      } 
+    } else {
+      if(this.value === 0)return 'tile tile-0';
+    }
     return 'tile';
   }
 

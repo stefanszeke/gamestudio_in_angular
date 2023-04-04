@@ -72,6 +72,9 @@ export class Game1024Component {
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
+
+    if(this.gameStatus !== "playing") return;
+
     this.movedOrMerged = false;
     switch (event.key) {
       case 'w': this.moveUp(); break;

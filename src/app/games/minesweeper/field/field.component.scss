@@ -5,7 +5,6 @@
     width: fit-content;
     box-shadow: 0px 0px 8px 3px rgb(25, 25, 25);
     border-radius: 4px;
-
 }
 
 .game {
@@ -106,6 +105,8 @@
 @media (max-width: 450px) {
     .box {
         grid-auto-flow: row;
+        justify-content: center;
         gap: 2px;
+        justify-self: stretch;
     }
 }

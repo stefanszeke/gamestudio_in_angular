@@ -1,31 +1,78 @@
 .tile {
-    display: grid;
-    place-items: center;
-
-    width: 25px;
-    height: 25px;
-    border: 1px solid rgb(78, 78, 78);
-    background-color: rgb(26, 25, 25);
-    box-sizing: border-box;
-    user-select: none;
+  width: 30px;
+  height: 30px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-bottom: 4px solid #3d3d3d;
+  border-left: 3px solid rgba(137, 47, 92, 0.5);
+  background-color: #727272;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: 80ms;
+  margin: 1px;
+  color: white;
+  font-weight: 700;
 }
 
-.tile:hover {
-    filter: brightness(2);
-    transform: scale(1.15);
-    cursor: pointer;
+.tile-hidden:hover {
+  filter: brightness(2);
+  transform: scale(1.15);
+  cursor: pointer;
 }
 
 .tile-0 {
-    color: #434242;
-    background-color: #262626;
-    border: none;
+  color: #434242;
+  background-color: #262626;
+  border: none;
 }
-.tile-1 { color: #7674ff;}
-.tile-2 { color: #4cd248;}
-.tile-3 { color: #ff3c00;}
-.tile-4 { color: #234cac;}
-.tile-5 { color: #d24646;}
-.tile-6 { color: #b960f9;}
-.tile-7 { color: #cdcdcd;}
-.tile-8 { color: #6a6a6a;}
+
+
+
+.tile-1 {
+  background-color: #6665cf;
+}
+
+.tile-2 {
+  background-color: #42ab3e;
+}
+
+.tile-3 {
+  background-color: #ff3c00;
+}
+
+.tile-4 {
+  background-color: #234cac;
+}
+
+.tile-5 {
+  background-color: #d24646;
+}
+
+.tile-6 {
+  background-color: #b960f9;
+}
+
+.tile-7 {
+  background-color: #cdcdcd;
+}
+
+.tile-8 {
+  background-color: #6a6a6a;
+}
+
+.tile-flag {
+  background-color: orange;
+}
+
+
+.tile-mine {
+  background-color: #b01717;
+  transform: scale(1.4);
+}
+@media screen and (max-width: 550px) {
+  .tile {
+    width: 25px;
+    height: 25px;
+  }
+}
