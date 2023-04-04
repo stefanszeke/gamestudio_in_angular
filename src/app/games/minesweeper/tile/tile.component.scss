@@ -8,11 +8,12 @@
   border-radius: 8px;
   display: grid;
   place-items: center;
-  cursor: pointer;
+
   transition: 80ms;
   margin: 1px;
   color: white;
   font-weight: 700;
+  user-select: none;
 }
 
 .tile-hidden:hover {
