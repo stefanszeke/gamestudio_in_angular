@@ -34,7 +34,7 @@ export class TileComponent {
     } else if(this.status === 'flagged') {
       return 'tile tile-flag';
     } else if(this.status === 'hidden') {
-      return 'tile tile-hid';
+      return 'tile tile-hidden';
     }
     return 'tile';
   }
