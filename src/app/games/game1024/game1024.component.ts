@@ -67,6 +67,13 @@ export class Game1024Component {
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
 
+    switch(event.key) {
+      case 'w': this.pressKey("up"); break;
+      case 's': this.pressKey("down"); break;
+      case 'a': this.pressKey("left"); break;
+      case 'd': this.pressKey("right"); break;
+    }
+
     if(this.gameStatus !== "playing") return;
 
     this.movedOrMerged = false;
@@ -90,6 +97,17 @@ export class Game1024Component {
     if(this.isLost()) {
       this.gameStatus = "lost";
       return;
+    }
+  }
+
+    
+  @HostListener('document:keyup', ['$event'])
+  handleKeyboardEvent3(event: KeyboardEvent) {
+    switch(event.key) {
+      case 'w': this.releaseKey("up"); break;
+      case 's': this.releaseKey("down"); break;
+      case 'a': this.releaseKey("left"); break;
+      case 'd': this.releaseKey("right"); break;
     }
   }
 
@@ -390,26 +408,6 @@ export class Game1024Component {
       case 'right': this.isRightPressed = false; break;
     }
   }
-  
 
-  @HostListener('document:keydown', ['$event'])
-  handleKeyboardEvent2(event: KeyboardEvent) {
-    switch(event.key) {
-      case 'w': this.pressKey("up"); break;
-      case 's': this.pressKey("down"); break;
-      case 'a': this.pressKey("left"); break;
-      case 'd': this.pressKey("right"); break;
-    }
-  }
-
-  @HostListener('document:keyup', ['$event'])
-  handleKeyboardEvent3(event: KeyboardEvent) {
-    switch(event.key) {
-      case 'w': this.releaseKey("up"); break;
-      case 's': this.releaseKey("down"); break;
-      case 'a': this.releaseKey("left"); break;
-      case 'd': this.releaseKey("right"); break;
-    }
-  }
 
 }
