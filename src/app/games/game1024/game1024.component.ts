@@ -386,9 +386,13 @@ export class Game1024Component {
   }
 
   //
+  
   dispatchKeyboardEvent(key: string): void {
+    console.log("dispatching event: " + key)
     const event = new KeyboardEvent('keydown', {key});
+    const event2 = new KeyboardEvent('keyup', {key});
     document.dispatchEvent(event);
+    setTimeout(() => document.dispatchEvent(event2), 100);
   }
 
   pressKey(key: string): void {

@@ -74,7 +74,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   width: 300px;
-
+  user-select: none;
 }
 
 .control-btn {
@@ -111,16 +111,19 @@
   transition: 60ms;
 }
 
-.control-btn:hover::before {
-  width: 70%;
-  height: 70%;
-}
 
-.control-btn:hover {
-  cursor: pointer;
-  transform: scale(0.95);
-  background-color: rgb(45, 44, 44);
-  font-size: 2rem;
+
+@media (hover:hover) and (pointer: fine) {
+  .control-btn:hover {
+    cursor: pointer;
+    transform: scale(0.95);
+    background-color: rgb(45, 44, 44);
+    font-size: 2rem;
+  }
+  .control-btn:hover::before {
+    width: 70%;
+    height: 70%;
+  }
 }
 
 .btn-empty {
