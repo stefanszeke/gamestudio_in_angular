@@ -1,6 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { GameStatus } from './GameStatus';
 import { Tile1024 } from './tile1024/Tile';
+import { faCaretUp, faCaretDown, faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-game1024',
@@ -19,6 +20,8 @@ export class Game1024Component {
   isLeftPressed: boolean = false;
   isRightPressed: boolean = false;
   isDownPressed: boolean = false;
+
+  faCaretUp = faCaretUp; faCaretDown = faCaretDown; faCaretLeft = faCaretLeft; faCaretRight = faCaretRight;
 
   constructor() { }
 
@@ -386,7 +389,7 @@ export class Game1024Component {
   }
 
   //
-  
+
   dispatchKeyboardEvent(key: string): void {
     console.log("dispatching event: " + key)
     const event = new KeyboardEvent('keydown', {key});

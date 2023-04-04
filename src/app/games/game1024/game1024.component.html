@@ -16,12 +16,25 @@
 </div>
 
 <div class="controls">
-  <div class="control-btn btn-up" [ngClass]="{'btn-pressed': isUpPressed}" (click)="dispatchKeyboardEvent('w')">▲</div>
-  <div class="control-btn btn-left" [ngClass]="{'btn-pressed': isLeftPressed}" (click)="dispatchKeyboardEvent('a')">◄</div>
+  <div class="control-btn btn-up" [ngClass]="{'btn-pressed': isUpPressed}" (click)="dispatchKeyboardEvent('w')">
+    <fa-icon [icon]="faCaretUp"></fa-icon>
+  </div>
+
+  <div class="control-btn btn-left" [ngClass]="{'btn-pressed': isLeftPressed}" (click)="dispatchKeyboardEvent('a')">
+    <fa-icon [icon]="faCaretLeft"></fa-icon>
+  </div>
+
   <div class="control-btn btn-empty"><i class="fa-solid fa-gamepad"></i></div>
-  <div class="control-btn btn-right" [ngClass]="{'btn-pressed': isRightPressed}" (click)="dispatchKeyboardEvent('d')">►</div>
-  <div class="control-btn btn-down" [ngClass]="{'btn-pressed': isDownPressed}" (click)="dispatchKeyboardEvent('s')">▼</div>
+
+  <div class="control-btn btn-right" [ngClass]="{'btn-pressed': isRightPressed}" (click)="dispatchKeyboardEvent('d')">
+    <fa-icon [icon]="faCaretRight"></fa-icon>
+  </div>
+
+  <div class="control-btn btn-down" [ngClass]="{'btn-pressed': isDownPressed}" (click)="dispatchKeyboardEvent('s')">
+    <fa-icon [icon]="faCaretDown"></fa-icon>
+  </div>
 </div>
+
 <h4 style="color: white;">use [WASD] to move or the arrows</h4>
 <p>shift click to add value (use for debugging only !)</p>
 
