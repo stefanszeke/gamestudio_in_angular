@@ -75,6 +75,8 @@ export class Game1024Component {
 
     if(this.gameStatus !== "playing") return;
 
+
+
     this.movedOrMerged = false;
     switch (event.key) {
       case 'w': this.moveUp(); break;
@@ -303,7 +305,7 @@ export class Game1024Component {
 
   reset(): void {
     this.gameStatus = 'reset';
-    setTimeout(() => {this.gameStatus = 'paused';}, 500);
+    setTimeout(() => {this.gameStatus = 'playing';}, 500);
     this.gameField = [];
     this.movedOrMerged = false;
     this.generateBoard();
