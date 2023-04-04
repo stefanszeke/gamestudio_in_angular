@@ -15,16 +15,10 @@ export class Game1024Component {
   gameStatus: GameStatus = "playing";
   moveCount: number = 0;
 
-  moves: any = {
-    right:{
-      switch: [0, this.size,this.size-1, 0],
-      move: [0, this.size, 0, this.size-1],
-      merge: [0, this.size, this.size-1, 0]
-    },
-    left:{},
-    up:{},
-    down:{}
-  }
+  isUpPressed: boolean = false;
+  isLeftPressed: boolean = false;
+  isRightPressed: boolean = false;
+  isDownPressed: boolean = false;
 
   constructor() { }
 
@@ -74,8 +68,6 @@ export class Game1024Component {
   handleKeyboardEvent(event: KeyboardEvent) {
 
     if(this.gameStatus !== "playing") return;
-
-
 
     this.movedOrMerged = false;
     switch (event.key) {
@@ -379,6 +371,45 @@ export class Game1024Component {
   dispatchKeyboardEvent(key: string): void {
     const event = new KeyboardEvent('keydown', {key});
     document.dispatchEvent(event);
+  }
+
+  pressKey(key: string): void {
+    switch(key) {
+      case 'up': this.isUpPressed = true; break;
+      case 'down': this.isDownPressed = true; break;
+      case 'left': this.isLeftPressed = true; break;
+      case 'right': this.isRightPressed = true; break;
+   }
+  }
+  
+  releaseKey(key: string): void {
+    switch(key) {
+      case 'up': this.isUpPressed = false; break;
+      case 'down': this.isDownPressed = false; break;
+      case 'left': this.isLeftPressed = false; break;
+      case 'right': this.isRightPressed = false; break;
+    }
+  }
+  
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent2(event: KeyboardEvent) {
+    switch(event.key) {
+      case 'w': this.pressKey("up"); break;
+      case 's': this.pressKey("down"); break;
+      case 'a': this.pressKey("left"); break;
+      case 'd': this.pressKey("right"); break;
+    }
+  }
+
+  @HostListener('document:keyup', ['$event'])
+  handleKeyboardEvent3(event: KeyboardEvent) {
+    switch(event.key) {
+      case 'w': this.releaseKey("up"); break;
+      case 's': this.releaseKey("down"); break;
+      case 'a': this.releaseKey("left"); break;
+      case 'd': this.releaseKey("right"); break;
+    }
   }
 
 }
