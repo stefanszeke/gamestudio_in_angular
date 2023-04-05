@@ -1,9 +1,12 @@
 .score-table-wrapper {
   position: relative;
   background-color: rgb(24, 24, 26);
-  border: 2px solid rgb(58, 58, 58);
+
   border-radius: 6px;
-  color: rgb(203, 157, 87);
+  color: rgb(207, 166, 107);
+
+  min-width: 320px;
+  padding: 10px;
 
   h2 {
     padding: 5px;
@@ -16,16 +19,36 @@
 }
 
 .score-table {
-  max-width: 600px;
   border-collapse: collapse;
+  width: 100%;
 
+  thead {
+    background-color: rgb(120, 101, 81);
+    color: white;
+    :first-child {
+      text-align: left;
+      padding-right: 10px;
+    }
+    :last-child {
+      text-align: right;
+    }
+  }
 
   th,
   td {
-    text-align: start;
-    border: 1px solid rgb(45, 44, 44);
     padding: 4px;
+  }
 
+  td:nth-child(2) {
+    font-weight: bolder;
+    color: white;
+  }
+  
+  tr:nth-child(2n) {
+    background-color: rgb(40, 40, 40);
+  }
+  .score-table-points {
+    text-align: center;
   }
 }
 
@@ -34,14 +57,18 @@
   width: 100%;
   height: 100%;
   top: 0;
+  left: 0;
   background-color: rgba(44, 44, 65, 0.9);
   display: grid;
   place-items: center;
   font-size: 1.5rem;
 }
 
+
+
 @media (max-width: 440px) {
   .score-table-wrapper {
     font-size: 0.75rem;
+    min-width: auto;
   }
 }

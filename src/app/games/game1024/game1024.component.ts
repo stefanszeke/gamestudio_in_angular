@@ -2,6 +2,8 @@ import { Component, HostListener } from '@angular/core';
 import { GameStatus } from './GameStatus';
 import { Tile1024 } from './tile1024/Tile';
 import { faCaretUp, faCaretDown, faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { Store } from '@ngrx/store';
+import { ScoreActions } from 'src/app/state/score/score.actions';
 
 @Component({
   selector: 'app-game1024',
@@ -23,13 +25,15 @@ export class Game1024Component {
 
   faCaretUp = faCaretUp; faCaretDown = faCaretDown; faCaretLeft = faCaretLeft; faCaretRight = faCaretRight;
 
-  constructor() { }
+  constructor(private store: Store) { }
 
   ngOnInit(): void {
     this.generateBoard();
 
     this.addRandomNumber();
     this.addRandomNumber();
+    this.store.dispatch(ScoreActions.loadTopScoresByGame({game: 'Game1024'}));
+    
   }
 
   generateBoard(): void {

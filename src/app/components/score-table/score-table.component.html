@@ -1,6 +1,5 @@
 <div  class="score-table-wrapper">
   <h2>{{(topScores$ | async)?.[0]?.game}}</h2>
-  <h2>posting: {{ isPostingScore$ | async }}</h2>
   <table class="score-table">
     <thead>
       <tr>
@@ -13,7 +12,7 @@
     <tbody>
       <tr *ngFor="let score of (topScores$ | async)">
         <td>{{score.player}}</td>
-        <td>{{score.points}}</td>
+        <td class="score-table-points">{{score.points}}</td>
         <td>{{formatDate(score.playedOn)}}</td>
       </tr>
 
@@ -23,11 +22,12 @@
     <p>no database connection</p>
   </div>
 
-  <div *ngIf="(getError$ | async)?.error?.message" class="score-table-wrapper">
-    <p>{{( getError$ | async).error.message }} </p>
+  <div *ngIf="(getError$ | async)?.status != 0" class="score-table-wrapper">
+    <p>{{ ( getError$ | async)?.message }} </p>
   </div>
 
   <div *ngIf="(isPostingScore$ | async)" class="table-overlay">posting score ...</div>
+  <div *ngIf="(isLoadingScores$ | async)" class="table-overlay">loading score ...</div>
 </div>
 
 

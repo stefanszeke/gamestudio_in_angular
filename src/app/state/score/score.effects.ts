@@ -18,7 +18,16 @@ export class ScoreEffects {
       // delay(1000), // for testing
       exhaustMap(({ game }) => // exhaustMap waits for the previous observable to complete before calling the next one, game is the payload
         this.apiService.getTopScoresByGame(game).pipe( // call the api service, passing in the game name
-          map((scores: Score[]) => ScoreActions.loadTopScoresByGameSuccess({ scores })), // if successful, dispatch this action
+
+          map((response: any) => {
+            console.log('getTopScoresByName$ response:', response);
+            if(response.message) {
+              return ScoreActions.loadTopScoresByGameFailure({ error: response });
+            } else {
+              return ScoreActions.loadTopScoresByGameSuccess({ scores: response });
+            }
+          }), // if successful, dispatch this action
+          
           catchError((error: any) => {
             console.log('getTopScoresByName$ error:', error);
             return of(ScoreActions.loadTopScoresByGameFailure({ error }))
