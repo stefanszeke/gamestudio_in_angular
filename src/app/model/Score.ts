@@ -5,5 +5,5 @@ import { Timestamp } from "rxjs";
     game: string;
     player: string;
     points: number;
-    playedon?: Timestamp<any>
+    playedOn?: Timestamp<any>
  } 

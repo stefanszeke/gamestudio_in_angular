@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Timestamp } from 'rxjs';
 import { Score } from 'src/app/model/Score';
-import { selectTopScores } from 'src/app/state/score/score.selectors';
+import { selectIsPostingScore, selectScoreGetError, selectTopScores } from 'src/app/state/score/score.selectors';
 
 @Component({
   selector: 'app-score-table',
@@ -11,6 +11,13 @@ import { selectTopScores } from 'src/app/state/score/score.selectors';
 })
 export class ScoreTableComponent {
   topScores$: Observable<Score[]> = this.store.select(selectTopScores);
+  isPostingScore$: Observable<boolean> = this.store.select(selectIsPostingScore);
+  getError$: Observable<any> = this.store.select(selectScoreGetError);
   
   constructor(private store: Store) { }
+
+  formatDate(timestamp: any): string {
+    const date = new Date(timestamp);
+    return date.toLocaleDateString('en-gb') + ' ' + date.toLocaleTimeString('en-gb');
+  }
 }

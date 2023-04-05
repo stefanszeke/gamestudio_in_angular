@@ -1,33 +1,47 @@
 .score-table-wrapper {
-    background-color: rgb(24, 24, 26);
-    border: 2px solid rgb(58, 58, 58);
-    border-radius: 6px;
-    color: rgb(203, 157, 87);
-    h2 {
-        padding: 5px;
-        margin: 0;
-    }
-    p {
-        padding: 0px 15px;
-    }
+  position: relative;
+  background-color: rgb(24, 24, 26);
+  border: 2px solid rgb(58, 58, 58);
+  border-radius: 6px;
+  color: rgb(203, 157, 87);
+
+  h2 {
+    padding: 5px;
+    margin: 0;
+  }
+
+  p {
+    padding: 0px 15px;
+  }
 }
 
 .score-table {
-    max-width: 600px;
-    border-collapse: collapse;
+  max-width: 600px;
+  border-collapse: collapse;
 
 
-    th,td {
-        text-align: start;
-        border: 1px solid rgb(45, 44, 44);
-        padding: 4px;
+  th,
+  td {
+    text-align: start;
+    border: 1px solid rgb(45, 44, 44);
+    padding: 4px;
 
-    }
+  }
+}
+
+.table-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background-color: rgba(44, 44, 65, 0.9);
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
 }
 
 @media (max-width: 440px) {
-    .score-table-wrapper {
-        font-size: 0.75rem;
-    }
+  .score-table-wrapper {
+    font-size: 0.75rem;
+  }
 }
-

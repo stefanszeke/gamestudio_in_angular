@@ -65,7 +65,7 @@ export class BlocksFieldComponent {
     if(this.hasNoMoreMoves()) {
 
       this.status = "won";
-      this.store.dispatch(ScoreActions.postScoreAndGetScore({score: {game: 'Blocks',player:"player", points: this.score}}));
+      this.store.dispatch(ScoreActions.postScore({score: {game: 'Blocks',player:"player", points: this.score}}));
     }
   
   }

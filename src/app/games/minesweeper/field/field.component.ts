@@ -120,7 +120,7 @@ export class FieldComponent {
 
   submitScore(): void {
     const newScore: Score = { game: 'Minesweeper', player: "frontend_player", points: this.score };
-    this.store.dispatch(ScoreActions.postScoreAndGetScore({score: newScore}));
+    this.store.dispatch(ScoreActions.postScore({score: newScore}));
     this.scoreSubmitted = true;
   }
 

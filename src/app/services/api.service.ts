@@ -9,7 +9,7 @@ import { Score } from '../model/Score';
 })
 export class ApiService {
 
-  API_URL: string = 'http://localhost:8081/api/score';
+  API_URL: string = 'http://localhost:8090/api/score';
 
   options = {
     headers: new HttpHeaders({

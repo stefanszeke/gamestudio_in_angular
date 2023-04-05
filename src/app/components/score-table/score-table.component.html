@@ -1,25 +1,34 @@
+<div  class="score-table-wrapper">
+  <h2>{{(topScores$ | async)?.[0]?.game}}</h2>
+  <h2>posting: {{ isPostingScore$ | async }}</h2>
+  <table class="score-table">
+    <thead>
+      <tr>
+        <th>Player</th>
+        <th>Points</th>
+        <th>Played on</th>
+      </tr>
+    </thead>
 
-<div *ngIf="(topScores$ | async)?.length != 0" class="score-table-wrapper">
-    <h2>{{(topScores$ | async)?.[0]?.game}}</h2>
-    <table class="score-table">
-        <thead>
-            <tr>
-                <th>Player</th>
-                <th>Points</th>
-                <th>Played on</th>
-            </tr>
-        </thead>
+    <tbody>
+      <tr *ngFor="let score of (topScores$ | async)">
+        <td>{{score.player}}</td>
+        <td>{{score.points}}</td>
+        <td>{{formatDate(score.playedOn)}}</td>
+      </tr>
 
-        <tbody>
-            <tr *ngFor="let score of (topScores$ | async)">
-                <td>{{score.player}}</td>
-                <td>{{score.points}}</td>
-                <td>{{score.playedon}}</td>
-            </tr>
+  </table>
 
-    </table>
+  <div *ngIf="(getError$ | async)?.status == 0" class="score-table-wrapper">
+    <p>no database connection</p>
+  </div>
+
+  <div *ngIf="(getError$ | async)?.error?.message" class="score-table-wrapper">
+    <p>{{( getError$ | async).error.message }} </p>
+  </div>
+
+  <div *ngIf="(isPostingScore$ | async)" class="table-overlay">posting score ...</div>
 </div>
 
-<div *ngIf="(topScores$ | async)?.length === 0" class="score-table-wrapper">
-    <p>no score or database connection</p>
-</div>
+
+
