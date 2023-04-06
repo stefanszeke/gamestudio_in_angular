@@ -7,6 +7,8 @@ import { Tile, TileStatus } from './Tile';
 import { Store } from '@ngrx/store';
 import { ScoreActions } from 'src/app/state/score/score.actions';
 import { Observable } from 'rxjs';
+import { CommentActions } from 'src/app/state/comment/comment.actions';
+import { setCurrentGame } from 'src/app/state/game/game.reducer';
 
 @Component({
   selector: 'app-field',
@@ -35,7 +37,9 @@ export class FieldComponent {
 
   ngOnInit(): void {
     this.initBoard();
+    this.store.dispatch(setCurrentGame({game: 'Blocks'}));
     this.store.dispatch(ScoreActions.loadTopScoresByGame({game: 'Minesweeper'}));
+    this.store.dispatch(CommentActions.loadComments({game: 'Minesweeper'}));
   }
 
 

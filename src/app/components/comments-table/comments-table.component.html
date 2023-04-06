@@ -1,0 +1,54 @@
+<form class="comments-form" [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+  <p>Post a comment</p>
+
+  <label>Name:</label>
+  <input type="text" formControlName="name">
+  <div class="comments-form-error">
+    <span *ngIf="commentForm.get('name')?.errors?.hasOwnProperty('required') && commentForm.get('name')?.dirty ">Name is
+      required</span>
+    <span *ngIf="commentForm.get('name')?.errors?.hasOwnProperty('minlength')">Name has to be at least 2
+      characters</span>
+  </div>
+
+  <label>Comment:</label>
+  <textarea formControlName="comment"></textarea>
+  <div class="comments-form-error">
+    <span
+      *ngIf="commentForm.get('comment')?.errors?.hasOwnProperty('required') && commentForm.get('comment')?.dirty ">Comment
+      is required</span>
+  </div>
+
+  <button type="submit" [disabled]="commentForm.invalid" [class.disabled-button]="commentForm.invalid">Submit</button>
+</form>
+
+
+
+
+<table class="comments-table">
+
+  <tbody>
+
+    <tr *ngFor="let comment of (topComments$ | async)">
+      <td>{{comment.comment}}</td>
+
+      <td>
+        <span><fa-icon [icon]="faUser"></fa-icon> </span>
+        <span> {{comment.player}}</span>
+          <span> | </span>
+          <span><fa-icon [icon]="faCalendar"></fa-icon> </span>
+          <span> {{ formatDate(comment.commentedOn) }}</span>
+      </td>
+
+    </tr>
+
+  </tbody>
+
+  <div *ngIf="(getError$ | async)?.status == 0">
+    <p>no database connection</p>
+  </div>
+
+  <div *ngIf="(getError$ | async)?.status != 0">
+    <p>{{ ( getError$ | async)?.message }} </p>
+  </div>
+
+</table>

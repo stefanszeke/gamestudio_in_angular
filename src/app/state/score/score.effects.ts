@@ -20,7 +20,6 @@ export class ScoreEffects {
         this.apiService.getTopScoresByGame(game).pipe( // call the api service, passing in the game name
 
           map((response: any) => {
-            console.log('getTopScoresByName$ response:', response);
             if(response.message) {
               return ScoreActions.loadTopScoresByGameFailure({ error: response });
             } else {
@@ -29,7 +28,6 @@ export class ScoreEffects {
           }), // if successful, dispatch this action
           
           catchError((error: any) => {
-            console.log('getTopScoresByName$ error:', error);
             return of(ScoreActions.loadTopScoresByGameFailure({ error }))
           }
           ) // if error, dispatch this action

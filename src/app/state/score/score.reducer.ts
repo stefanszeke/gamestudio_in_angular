@@ -46,13 +46,11 @@ export const scoreReducer = createReducer (
         postError: null
     })),
     on(ScoreActions.postScoreSuccess, (state) => {
-      console.log('postScoreSuccess before:', state);
       const newState = {
         ...state,
         isPostingScore: false,
         postError: null
       };
-      console.log('postScoreSuccess after:', newState);
       return newState;
     }),
     on(ScoreActions.postScoreFailure, (state, {error}) => ({

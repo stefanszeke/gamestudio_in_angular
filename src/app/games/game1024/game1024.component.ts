@@ -4,6 +4,8 @@ import { Tile1024 } from './tile1024/Tile';
 import { faCaretUp, faCaretDown, faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { ScoreActions } from 'src/app/state/score/score.actions';
+import { CommentActions } from 'src/app/state/comment/comment.actions';
+import { setCurrentGame } from 'src/app/state/game/game.reducer';
 
 @Component({
   selector: 'app-game1024',
@@ -32,7 +34,10 @@ export class Game1024Component {
 
     this.addRandomNumber();
     this.addRandomNumber();
+    this.store.dispatch(setCurrentGame({game: 'Game1024'}));
     this.store.dispatch(ScoreActions.loadTopScoresByGame({game: 'Game1024'}));
+    this.store.dispatch(CommentActions.loadComments({game: 'Game1024'}));
+
     
   }
 
@@ -121,7 +126,6 @@ export class Game1024Component {
   
   // RIGHT //////////////////////////////////////////d
   moveRight(): void {
-    console.log('moveRight');
     let move: boolean = this.canMoveRight()
     while(move) {
       this.switchRight()
@@ -165,7 +169,6 @@ export class Game1024Component {
   }
   // LEFT //////////////////////////////////////////
   moveLeft(): void {
-    console.log('moveLeft');
     let move: boolean = this.canMoveLeft()
     while(move) {
       this.switchLeft()
@@ -209,7 +212,6 @@ export class Game1024Component {
   }
   // Up //////////////////////////////////////////
   moveUp(): void {
-    console.log('moveUp');
     let move: boolean = this.canMoveUp()
     while(move) {
       this.switchUp()
@@ -252,7 +254,6 @@ export class Game1024Component {
   }
   // Down //////////////////////////////////////////
   moveDown(): void {
-    console.log('moveDown');
     let move: boolean = this.canMoveDown()
     while(move) {
       this.switchDown()
@@ -395,7 +396,6 @@ export class Game1024Component {
   //
 
   dispatchKeyboardEvent(key: string): void {
-    console.log("dispatching event: " + key)
     const event = new KeyboardEvent('keydown', {key});
     const event2 = new KeyboardEvent('keyup', {key});
     document.dispatchEvent(event);

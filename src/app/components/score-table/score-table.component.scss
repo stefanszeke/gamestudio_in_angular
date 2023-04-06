@@ -1,11 +1,10 @@
 .score-table-wrapper {
   position: relative;
-  background-color: rgb(24, 24, 26);
 
   border-radius: 6px;
-  color: rgb(207, 166, 107);
+  color: rgb(238, 223, 201);
 
-  min-width: 320px;
+  width: 100%;
   padding: 10px;
 
   h2 {
@@ -23,7 +22,6 @@
   width: 100%;
 
   thead {
-    background-color: rgb(120, 101, 81);
     color: white;
     :first-child {
       text-align: left;
@@ -36,10 +34,10 @@
 
   th,
   td {
-    padding: 4px;
+    padding: 6px 18px;
   }
 
-  td:nth-child(2) {
+  td:nth-child(2n) {
     font-weight: bolder;
     color: white;
   }
@@ -62,13 +60,4 @@
   display: grid;
   place-items: center;
   font-size: 1.5rem;
-}
-
-
-
-@media (max-width: 440px) {
-  .score-table-wrapper {
-    font-size: 0.75rem;
-    min-width: auto;
-  }
 }

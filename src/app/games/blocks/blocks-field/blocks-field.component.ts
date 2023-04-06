@@ -3,6 +3,8 @@ import { Store } from '@ngrx/store';
 import { BlocksTile, BlocksTileColor } from '../blocks-tile/BlocksTile';
 import { GameStatus } from './GameStatus';
 import { ScoreActions } from 'src/app/state/score/score.actions';
+import { CommentActions } from 'src/app/state/comment/comment.actions';
+import { setCurrentGame } from 'src/app/state/game/game.reducer';
 
 @Component({
   selector: 'app-blocks-field',
@@ -27,7 +29,9 @@ export class BlocksFieldComponent {
 
   ngOnInit(): void {
     this.generateBoard();
+    this.store.dispatch(setCurrentGame({game: 'Blocks'}));
     this.store.dispatch(ScoreActions.loadTopScoresByGame({game: 'Blocks'}));
+    this.store.dispatch(CommentActions.loadComments({game: 'Blocks'}));
   }
 
 
