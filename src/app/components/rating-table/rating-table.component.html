@@ -1,0 +1,40 @@
+<div class="rating-wrapper">
+  <div class="rating">
+    <div *ngIf="!(getError$ | async)" class="rating-display">
+      <h4>rating:  </h4><h4 class="rating-number" [class.rating-loading]="(isRatingPosting$ | async)">{{ (rating$ | async)?.toFixed(2) }}  / 5</h4>
+      <div class="loading" [class.rating-animation]="(isRatingPosting$ | async)" ><fa-icon [icon]="faHourglass"></fa-icon></div>
+    </div>
+
+    <div *ngIf="(getError$ | async)?.status != 0">
+      {{ (getError$ | async)?.message }}
+    </div>
+  
+    <div *ngIf="(getError$ | async)?.status == 0">
+      no database connection
+    </div>
+  </div>
+
+  <form class="rating-form" [formGroup]="ratingForm" (ngSubmit)="onSubmit()">
+
+    <button type="submit" [disabled]="ratingForm.invalid" [class.disabled-button]="ratingForm.invalid">rate</button>
+
+    <input formControlName="rating" type="radio" id="option1" name="rating" value=5>
+    <label for="option1"> <fa-icon [icon]="faStar"></fa-icon> </label>
+
+    <input formControlName="rating" type="radio" id="option2" name="rating" value=4>
+    <label for="option2"> <fa-icon [icon]="faStar"></fa-icon> </label>
+
+    <input formControlName="rating" type="radio" id="option3" name="rating" value=3>
+    <label for="option3"> <fa-icon [icon]="faStar"></fa-icon> </label>
+
+    <input formControlName="rating" type="radio" id="option4" name="rating" value=2>
+    <label for="option4"> <fa-icon [icon]="faStar"></fa-icon> </label>
+
+    <input formControlName="rating" type="radio" id="option5" name="rating" value=1>
+    <label for="option5"> <fa-icon [icon]="faStar"></fa-icon> </label>
+
+    <p> rate: </p>
+
+  </form>
+
+</div>

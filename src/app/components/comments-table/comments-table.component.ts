@@ -39,7 +39,7 @@ export class CommentsTableComponent {
     this.store.dispatch(CommentActions.postComment({comment: newComment}));
 
     this.commentForm.reset();
-    });
+    }).unsubscribe();
   }
 
   formatDate(timestamp: any): string {

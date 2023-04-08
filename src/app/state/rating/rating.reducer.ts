@@ -10,6 +10,7 @@ export interface RatingState {
   getError: any | null;
   isPostingRating: boolean;
   postError: any | null;
+  ratingPosted: boolean;
 }
 
 export const initialState: RatingState = {
@@ -17,7 +18,8 @@ export const initialState: RatingState = {
   isGettingRating: false,
   getError: null,
   isPostingRating: false,
-  postError: null
+  postError: null,
+  ratingPosted: false
 }
 
 export const ratingReducer = createReducer (
@@ -42,16 +44,19 @@ export const ratingReducer = createReducer (
   on(RatingActions.postRating, (state) => ({
     ...state,
     isPostingRating: true,
-    postError: null
+    postError: null,
+    ratingPosted: false
   })),
   on(RatingActions.postRatingSuccess, (state) => ({
     ...state,
     isPostingRating: false,
-    postError: null
+    postError: null,
+    ratingPosted: true
   })),
   on(RatingActions.postRatingFailure, (state, {error}) => ({
     ...state,
     isPostingRating: false,
-    postError: error
+    postError: error,
+    ratingPosted: false
   }))
 )

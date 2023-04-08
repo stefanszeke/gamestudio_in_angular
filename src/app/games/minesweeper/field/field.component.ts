@@ -9,6 +9,7 @@ import { ScoreActions } from 'src/app/state/score/score.actions';
 import { Observable } from 'rxjs';
 import { CommentActions } from 'src/app/state/comment/comment.actions';
 import { setCurrentGame } from 'src/app/state/game/game.reducer';
+import { RatingActions } from 'src/app/state/rating/rating.actions';
 
 @Component({
   selector: 'app-field',
@@ -37,7 +38,8 @@ export class FieldComponent {
 
   ngOnInit(): void {
     this.initBoard();
-    this.store.dispatch(setCurrentGame({game: 'Blocks'}));
+    this.store.dispatch(setCurrentGame({game: 'Minesweeper'}));
+    this.store.dispatch(RatingActions.loadRating({game: 'Minesweeper'}));
     this.store.dispatch(ScoreActions.loadTopScoresByGame({game: 'Minesweeper'}));
     this.store.dispatch(CommentActions.loadComments({game: 'Minesweeper'}));
   }

@@ -29,7 +29,7 @@
   <tbody>
 
     <tr *ngFor="let comment of (topComments$ | async)">
-      <td>{{comment.comment}}</td>
+      <td class="comment-text">{{comment.comment}}</td>
 
       <td>
         <span><fa-icon [icon]="faUser"></fa-icon> </span>

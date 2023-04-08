@@ -1,0 +1,110 @@
+.rating-wrapper {
+  margin-top: 50px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: space-between;
+  border: 1px solid rgba(128, 128, 128, 0.196);
+  align-items: center;
+  padding: 5px 15px;
+  border-radius: 6px;
+  color: rgb(238, 223, 201);
+}
+
+.rating-form {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: end;
+  align-items: center;
+  gap: 4px;
+}
+
+.rating-form input[type="radio"] {
+  display: none;
+}
+
+.rating-form label {
+  cursor: pointer;
+  color: rgb(63, 63, 63);
+  transition: 70ms;
+}
+
+.rating-form label:hover {
+  transform: scale(1.1);
+  color: hotpink;
+}
+
+.rating-form input[type="radio"]:checked~label {
+  color: hotpink;
+}
+
+.rating-form button {
+  background: none;
+  color: white;
+  border: 1px solid rgb(128, 128, 128);
+  border-radius: 6px;
+  padding: 2px 8px;
+  cursor: pointer;
+  transition: 70ms;
+} 
+
+.rating-form button:hover {
+  transform: scale(1.1);
+  border: 1px solid hotpink;
+  color: hotpink;
+}
+.rating-display h4 {
+  display: inline-block;
+}
+
+.rating-display {
+  display: grid;
+  gap: 10px;
+  grid-auto-flow: column;
+  justify-content: start;
+  align-items: center;
+}
+
+.loading {
+  display: none;
+  color: white;
+
+}
+
+.rating-number {
+  position: relative;
+  color: hotpink;
+  transition: 200ms;
+  transform: scale(1);
+}
+
+.rating-loading {
+  color: grey;
+  font-size: 0.8rem;
+}
+
+.rating-animation {
+  display: block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rating-form .disabled-button {
+  position: disabled;
+  opacity: 0.3;
+  cursor: default
+}
+
+.rating-form .disabled-button:hover {
+  transform: none;
+  border: 1px solid rgb(128, 128, 128);
+  color: white;
+}

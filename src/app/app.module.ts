@@ -31,6 +31,7 @@ import { CommentEffects } from './state/comment/comment.effects';
 import { ratingReducer } from './state/rating/rating.reducer';
 import { RatingEffects } from './state/rating/rating.effects';
 import { gameReducer } from './state/game/game.reducer';
+import { RatingTableComponent } from './components/rating-table/rating-table.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { gameReducer } from './state/game/game.reducer';
     BlocksTileComponent,
     Game1024Component,
     Tile1024Component,
-    CommentsTableComponent
+    CommentsTableComponent,
+    RatingTableComponent
   ],
   imports: [
     BrowserModule,

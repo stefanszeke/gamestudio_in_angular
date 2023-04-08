@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { ScoreActions } from 'src/app/state/score/score.actions';
 import { CommentActions } from 'src/app/state/comment/comment.actions';
 import { setCurrentGame } from 'src/app/state/game/game.reducer';
+import { RatingActions } from 'src/app/state/rating/rating.actions';
 
 @Component({
   selector: 'app-game1024',
@@ -35,6 +36,7 @@ export class Game1024Component {
     this.addRandomNumber();
     this.addRandomNumber();
     this.store.dispatch(setCurrentGame({game: 'Game1024'}));
+    this.store.dispatch(RatingActions.loadRating({game: 'Game1024'}));
     this.store.dispatch(ScoreActions.loadTopScoresByGame({game: 'Game1024'}));
     this.store.dispatch(CommentActions.loadComments({game: 'Game1024'}));
 

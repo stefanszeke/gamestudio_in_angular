@@ -5,6 +5,7 @@ import { GameStatus } from './GameStatus';
 import { ScoreActions } from 'src/app/state/score/score.actions';
 import { CommentActions } from 'src/app/state/comment/comment.actions';
 import { setCurrentGame } from 'src/app/state/game/game.reducer';
+import { RatingActions } from 'src/app/state/rating/rating.actions';
 
 @Component({
   selector: 'app-blocks-field',
@@ -30,6 +31,7 @@ export class BlocksFieldComponent {
   ngOnInit(): void {
     this.generateBoard();
     this.store.dispatch(setCurrentGame({game: 'Blocks'}));
+    this.store.dispatch(RatingActions.loadRating({game: 'Blocks'}));
     this.store.dispatch(ScoreActions.loadTopScoresByGame({game: 'Blocks'}));
     this.store.dispatch(CommentActions.loadComments({game: 'Blocks'}));
   }

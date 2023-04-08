@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { catchError, exhaustMap, map, of } from "rxjs";
+import { catchError, delay, exhaustMap, map, of } from "rxjs";
 import { ApiService } from "src/app/services/api.service";
 import { RatingActions } from "./rating.actions";
 
@@ -28,6 +28,28 @@ export class RatingEffects {
             return of(RatingActions.loadRatingFailure({ error }))
           })
         )
+      )
+    )
+  );
+
+  postRating$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(RatingActions.postRating),
+      delay(1000), // for testing
+      exhaustMap(({ rating }) =>
+        this.apiService.postRating(rating).pipe(
+          map((response: any) => RatingActions.postRatingSuccess({ message: response.message, game: rating.game })),
+          catchError((error: any) => of(RatingActions.postRatingFailure({ error })))
+        )
+      )
+    )
+  );
+
+  loadRatingAfterPostRating$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(RatingActions.postRatingSuccess),
+      exhaustMap(({ message, game }) =>
+        of(RatingActions.loadRating({ game }))
       )
     )
   );
