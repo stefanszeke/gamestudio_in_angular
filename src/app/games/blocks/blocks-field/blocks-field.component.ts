@@ -26,7 +26,7 @@ export class BlocksFieldComponent {
   adjacentScoreCount: number = 0;
 
 
-  constructor(private store: Store) { }
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.generateBoard();

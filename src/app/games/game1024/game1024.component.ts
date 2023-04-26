@@ -35,12 +35,12 @@ export class Game1024Component {
 
     this.addRandomNumber();
     this.addRandomNumber();
-    this.store.dispatch(setCurrentGame({game: 'Game1024'}));
-    this.store.dispatch(RatingActions.loadRating({game: 'Game1024'}));
-    this.store.dispatch(ScoreActions.loadTopScoresByGame({game: 'Game1024'}));
-    this.store.dispatch(CommentActions.loadComments({game: 'Game1024'}));
+    this.store.dispatch(setCurrentGame({ game: 'Game1024' }));
+    this.store.dispatch(RatingActions.loadRating({ game: 'Game1024' }));
+    this.store.dispatch(ScoreActions.loadTopScoresByGame({ game: 'Game1024' }));
+    this.store.dispatch(CommentActions.loadComments({ game: 'Game1024' }));
 
-    
+
   }
 
   generateBoard(): void {
@@ -52,23 +52,23 @@ export class Game1024Component {
     }
   }
 
-  setHidden(i: number,j: number):boolean {
-    if(this.gameField[i][j].value === 0) {
+  setHidden(i: number, j: number): boolean {
+    if (this.gameField[i][j].value === 0) {
       return true;
     }
     return false;
   }
 
-  addRandomNumber():void {
+  addRandomNumber(): void {
     let validTile: boolean = false;
 
-    let numberToAdd: number = Math.floor(Math.random()*11) > 8 ? 2 : 1
+    let numberToAdd: number = Math.floor(Math.random() * 11) > 8 ? 2 : 1
 
-    while(!validTile) {
-      let randomRow: number = Math.floor(Math.random()*this.size)
-      let randomCol: number = Math.floor(Math.random()*this.size)
-  
-      if(this.gameField[randomRow][randomCol].value === 0) {
+    while (!validTile) {
+      let randomRow: number = Math.floor(Math.random() * this.size)
+      let randomCol: number = Math.floor(Math.random() * this.size)
+
+      if (this.gameField[randomRow][randomCol].value === 0) {
         this.gameField[randomRow][randomCol].value = numberToAdd
         validTile = true;
       }
@@ -81,14 +81,14 @@ export class Game1024Component {
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
 
-    switch(event.key) {
+    switch (event.key) {
       case 'w': this.pressKey("up"); break;
       case 's': this.pressKey("down"); break;
       case 'a': this.pressKey("left"); break;
       case 'd': this.pressKey("right"); break;
     }
 
-    if(this.gameStatus !== "playing") return;
+    if (this.gameStatus !== "playing") return;
 
     this.movedOrMerged = false;
     switch (event.key) {
@@ -98,26 +98,26 @@ export class Game1024Component {
       case 'd': this.moveRight(); break;
     }
 
-    if(this.movedOrMerged) {
+    if (this.movedOrMerged) {
       this.addRandomNumber();
       this.moveCount++;
     }
 
-    if(this.isWon()) {
+    if (this.isWon()) {
       this.gameStatus = "won";
       return;
     }
 
-    if(this.isLost()) {
+    if (this.isLost()) {
       this.gameStatus = "lost";
       return;
     }
   }
 
-    
+
   @HostListener('document:keyup', ['$event'])
   handleKeyboardEvent3(event: KeyboardEvent) {
-    switch(event.key) {
+    switch (event.key) {
       case 'w': this.releaseKey("up"); break;
       case 's': this.releaseKey("down"); break;
       case 'a': this.releaseKey("left"); break;
@@ -125,11 +125,11 @@ export class Game1024Component {
     }
   }
 
-  
+
   // RIGHT //////////////////////////////////////////d
   moveRight(): void {
     let move: boolean = this.canMoveRight()
-    while(move) {
+    while (move) {
       this.switchRight()
       this.movedOrMerged = true;
       move = this.canMoveRight();
@@ -138,10 +138,10 @@ export class Game1024Component {
   }
   switchRight() {
     for (let i = 0; i < this.size; i++) {
-      for (let j = this.size-2; j >= 0; j--) {
+      for (let j = this.size - 2; j >= 0; j--) {
 
-        if(this.gameField[i][j].value > 0 && this.gameField[i][j+1].value === 0) {
-          this.gameField[i][j+1].value = this.gameField[i][j].value;
+        if (this.gameField[i][j].value > 0 && this.gameField[i][j + 1].value === 0) {
+          this.gameField[i][j + 1].value = this.gameField[i][j].value;
           this.gameField[i][j].value = 0;
         }
       }
@@ -149,8 +149,8 @@ export class Game1024Component {
   }
   canMoveRight(): boolean {
     for (let i = 0; i < this.size; i++) {
-      for (let j = 0; j < this.size-1; j++) {
-        if(this.gameField[i][j].value > 0 && this.gameField[i][j+1].value === 0) {
+      for (let j = 0; j < this.size - 1; j++) {
+        if (this.gameField[i][j].value > 0 && this.gameField[i][j + 1].value === 0) {
           return true;
         }
       }
@@ -159,10 +159,10 @@ export class Game1024Component {
   }
   mergeRight(): void {
     for (let i = 0; i < this.size; i++) {
-      for (let j = this.size-1; j > 0; j--) {
-        if(this.gameField[i][j].value > 0 && (this.gameField[i][j].value === this.gameField[i][j-1].value)) {
+      for (let j = this.size - 1; j > 0; j--) {
+        if (this.gameField[i][j].value > 0 && (this.gameField[i][j].value === this.gameField[i][j - 1].value)) {
           this.gameField[i][j].value *= 2;
-          this.gameField[i][j-1].value = 0;
+          this.gameField[i][j - 1].value = 0;
           this.movedOrMerged = true;
         }
       }
@@ -172,7 +172,7 @@ export class Game1024Component {
   // LEFT //////////////////////////////////////////
   moveLeft(): void {
     let move: boolean = this.canMoveLeft()
-    while(move) {
+    while (move) {
       this.switchLeft()
       this.movedOrMerged = true;
       move = this.canMoveLeft();
@@ -181,19 +181,19 @@ export class Game1024Component {
   }
   switchLeft() {
     for (let i = 0; i < this.size; i++) {
-      for (let j = 0; j < this.size-1; j++) {
+      for (let j = 0; j < this.size - 1; j++) {
 
-        if(this.gameField[i][j+1].value > 0 && this.gameField[i][j].value === 0) {
-          this.gameField[i][j].value = this.gameField[i][j+1].value;
-          this.gameField[i][j+1].value = 0;
+        if (this.gameField[i][j + 1].value > 0 && this.gameField[i][j].value === 0) {
+          this.gameField[i][j].value = this.gameField[i][j + 1].value;
+          this.gameField[i][j + 1].value = 0;
         }
       }
     }
   }
   canMoveLeft(): boolean {
     for (let i = 0; i < this.size; i++) {
-      for (let j = 0; j < this.size-1; j++) {
-        if(this.gameField[i][j+1].value > 0 && this.gameField[i][j].value === 0) {
+      for (let j = 0; j < this.size - 1; j++) {
+        if (this.gameField[i][j + 1].value > 0 && this.gameField[i][j].value === 0) {
           return true;
         }
       }
@@ -202,10 +202,10 @@ export class Game1024Component {
   }
   mergeLeft(): void {
     for (let i = 0; i < this.size; i++) {
-      for (let j = 0; j < this.size-1; j++) {
-        if(this.gameField[i][j].value > 0 && (this.gameField[i][j].value === this.gameField[i][j+1].value)) {
+      for (let j = 0; j < this.size - 1; j++) {
+        if (this.gameField[i][j].value > 0 && (this.gameField[i][j].value === this.gameField[i][j + 1].value)) {
           this.gameField[i][j].value *= 2;
-          this.gameField[i][j+1].value = 0;
+          this.gameField[i][j + 1].value = 0;
           this.movedOrMerged = true;
         }
       }
@@ -215,7 +215,7 @@ export class Game1024Component {
   // Up //////////////////////////////////////////
   moveUp(): void {
     let move: boolean = this.canMoveUp()
-    while(move) {
+    while (move) {
       this.switchUp()
       this.movedOrMerged = true;
       move = this.canMoveUp();
@@ -223,19 +223,19 @@ export class Game1024Component {
     this.mergeUp();
   }
   switchUp() {
-    for (let i = 0; i < this.size-1; i++) {
+    for (let i = 0; i < this.size - 1; i++) {
       for (let j = 0; j < this.size; j++) {
-        if(this.gameField[i+1][j].value > 0 && this.gameField[i][j].value === 0) {
-          this.gameField[i][j].value = this.gameField[i+1][j].value;
-          this.gameField[i+1][j].value = 0;
+        if (this.gameField[i + 1][j].value > 0 && this.gameField[i][j].value === 0) {
+          this.gameField[i][j].value = this.gameField[i + 1][j].value;
+          this.gameField[i + 1][j].value = 0;
         }
       }
     }
   }
   canMoveUp(): boolean {
-    for (let i = 0; i < this.size-1; i++) {
+    for (let i = 0; i < this.size - 1; i++) {
       for (let j = 0; j < this.size; j++) {
-        if(this.gameField[i+1][j].value > 0 && this.gameField[i][j].value === 0) {
+        if (this.gameField[i + 1][j].value > 0 && this.gameField[i][j].value === 0) {
           return true;
         }
       }
@@ -243,11 +243,11 @@ export class Game1024Component {
     return false;
   }
   mergeUp(): void {
-    for (let i = 0; i < this.size-1; i++) {
+    for (let i = 0; i < this.size - 1; i++) {
       for (let j = 0; j < this.size; j++) {
-        if(this.gameField[i][j].value > 0 && (this.gameField[i][j].value === this.gameField[i+1][j].value)) {
+        if (this.gameField[i][j].value > 0 && (this.gameField[i][j].value === this.gameField[i + 1][j].value)) {
           this.gameField[i][j].value *= 2;
-          this.gameField[i+1][j].value = 0;
+          this.gameField[i + 1][j].value = 0;
           this.movedOrMerged = true;
         }
       }
@@ -257,7 +257,7 @@ export class Game1024Component {
   // Down //////////////////////////////////////////
   moveDown(): void {
     let move: boolean = this.canMoveDown()
-    while(move) {
+    while (move) {
       this.switchDown()
       this.movedOrMerged = true;
       move = this.canMoveDown();
@@ -265,20 +265,20 @@ export class Game1024Component {
     this.mergeDown();
   }
   switchDown() {
-    for (let i = this.size-1; i > 0; i--) {
+    for (let i = this.size - 1; i > 0; i--) {
       for (let j = 0; j < this.size; j++) {
 
-        if(this.gameField[i-1][j].value > 0 && this.gameField[i][j].value === 0) {
-          this.gameField[i][j].value = this.gameField[i-1][j].value;
-          this.gameField[i-1][j].value = 0;
+        if (this.gameField[i - 1][j].value > 0 && this.gameField[i][j].value === 0) {
+          this.gameField[i][j].value = this.gameField[i - 1][j].value;
+          this.gameField[i - 1][j].value = 0;
         }
       }
     }
   }
   canMoveDown(): boolean {
-    for (let i = 0; i < this.size-1; i++) {
+    for (let i = 0; i < this.size - 1; i++) {
       for (let j = 0; j < this.size; j++) {
-        if(this.gameField[i][j].value > 0 && this.gameField[i+1][j].value === 0) {
+        if (this.gameField[i][j].value > 0 && this.gameField[i + 1][j].value === 0) {
           return true;
         }
       }
@@ -286,11 +286,11 @@ export class Game1024Component {
     return false;
   }
   mergeDown(): void {
-    for (let i = this.size-1; i > 0; i--) {
+    for (let i = this.size - 1; i > 0; i--) {
       for (let j = 0; j < this.size; j++) {
-        if(this.gameField[i][j].value > 0 && (this.gameField[i][j].value === this.gameField[i-1][j].value)) {
+        if (this.gameField[i][j].value > 0 && (this.gameField[i][j].value === this.gameField[i - 1][j].value)) {
           this.gameField[i][j].value *= 2;
-          this.gameField[i-1][j].value = 0;
+          this.gameField[i - 1][j].value = 0;
           this.movedOrMerged = true;
         }
       }
@@ -299,23 +299,23 @@ export class Game1024Component {
   }
 
   isLost(): boolean {
-    for(let i = 0; i < this.size; i++) {
-      for(let j = 0; j < this.size; j++) {
-        if(this.gameField[i][j].value === 0) {
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
+        if (this.gameField[i][j].value === 0) {
           return false;
         }
       }
     }
-    if(this.canMergeAtRow() || this.canMergeAtColumn()) {
+    if (this.canMergeAtRow() || this.canMergeAtColumn()) {
       return false;
     }
     return true;
   }
 
   isWon(): boolean {
-    for(let i = 0; i < this.size; i++) {
-      for(let j = 0; j < this.size; j++) {
-        if(this.gameField[i][j].value === 1024) {
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
+        if (this.gameField[i][j].value === 1024) {
           return true;
         }
       }
@@ -325,7 +325,7 @@ export class Game1024Component {
 
   reset(): void {
     this.gameStatus = 'reset';
-    setTimeout(() => {this.gameStatus = 'playing';}, 500);
+    setTimeout(() => { this.gameStatus = 'playing'; }, 500);
     this.gameField = [];
     this.movedOrMerged = false;
     this.generateBoard();
@@ -335,9 +335,9 @@ export class Game1024Component {
   }
 
   canMergeAtRow(): boolean {
-    for(let i = 0; i < this.size; i++) {
-      for(let j = 0; j < this.size-1; j++) {
-        if(this.gameField[i][j].value == this.gameField[i][j+1].value) {
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size - 1; j++) {
+        if (this.gameField[i][j].value == this.gameField[i][j + 1].value) {
           return true;
         }
       }
@@ -346,9 +346,9 @@ export class Game1024Component {
   }
 
   canMergeAtColumn(): boolean {
-    for(let i = 0; i < this.size-1; i++) {
-      for(let j = 0; j < this.size; j++) {
-        if(this.gameField[i][j].value == this.gameField[i+1][j].value) {
+    for (let i = 0; i < this.size - 1; i++) {
+      for (let j = 0; j < this.size; j++) {
+        if (this.gameField[i][j].value == this.gameField[i + 1][j].value) {
           return true;
         }
       }
@@ -358,9 +358,9 @@ export class Game1024Component {
 
   getBiggestNumber(): number {
     let biggestNumber: number = 0;
-    for(let i = 0; i < this.size; i++) {
-      for(let j = 0; j < this.size; j++) {
-        if(this.gameField[i][j].value > biggestNumber) {
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
+        if (this.gameField[i][j].value > biggestNumber) {
           biggestNumber = this.gameField[i][j].value;
         }
       }
@@ -389,8 +389,8 @@ export class Game1024Component {
     this.gameField[1][3].hidden = false;
   }
 
-  debugClick(event: MouseEvent, x:number, y:number): void {
-    if(event.shiftKey) {
+  debugClick(event: MouseEvent, x: number, y: number): void {
+    if (event.shiftKey) {
       this.gameField[x][y].value === 0 ? this.gameField[x][y].value = 1 : this.gameField[x][y].value *= 2;
     }
   }
@@ -398,23 +398,23 @@ export class Game1024Component {
   //
 
   dispatchKeyboardEvent(key: string): void {
-    const event = new KeyboardEvent('keydown', {key});
-    const event2 = new KeyboardEvent('keyup', {key});
+    const event = new KeyboardEvent('keydown', { key });
+    const event2 = new KeyboardEvent('keyup', { key });
     document.dispatchEvent(event);
     setTimeout(() => document.dispatchEvent(event2), 100);
   }
 
   pressKey(key: string): void {
-    switch(key) {
+    switch (key) {
       case 'up': this.isUpPressed = true; break;
       case 'down': this.isDownPressed = true; break;
       case 'left': this.isLeftPressed = true; break;
       case 'right': this.isRightPressed = true; break;
-   }
+    }
   }
-  
+
   releaseKey(key: string): void {
-    switch(key) {
+    switch (key) {
       case 'up': this.isUpPressed = false; break;
       case 'down': this.isDownPressed = false; break;
       case 'left': this.isLeftPressed = false; break;
