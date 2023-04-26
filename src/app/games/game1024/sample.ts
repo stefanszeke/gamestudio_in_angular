@@ -1,6 +1,5 @@
 import { Component, HostListener } from '@angular/core';
 import { GameStatus } from './GameStatus';
-import { ITile1024 } from './tile1024/ITile1024';
 import { faCaretUp, faCaretDown, faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { ScoreActions } from 'src/app/state/score/score.actions';
@@ -8,6 +7,9 @@ import { CommentActions } from 'src/app/state/comment/comment.actions';
 import { setCurrentGame } from 'src/app/state/game/game.reducer';
 import { RatingActions } from 'src/app/state/rating/rating.actions';
 import { Tile1024 } from './tile1024/tile1024.component';
+import { Vector } from './Vector';
+import { ITile1024 } from './tile1024/ITile1024';
+
 
 @Component({
   selector: 'app-game1024',
@@ -29,6 +31,9 @@ export class Game1024Component {
 
   faCaretUp = faCaretUp; faCaretDown = faCaretDown; faCaretLeft = faCaretLeft; faCaretRight = faCaretRight;
 
+
+
+
   constructor(private store: Store) { }
 
   ngOnInit(): void {
@@ -42,18 +47,21 @@ export class Game1024Component {
     this.store.dispatch(ScoreActions.loadTopScoresByGame({ game: 'Game1024' }));
     this.store.dispatch(CommentActions.loadComments({ game: 'Game1024' }));
 
-
+    console.log(this.gameField);
   }
 
   generateBoard(): void {
+    // for (let i = 0; i < this.size; i++) {
+    //   this.gameField.push([]);
+    //   for (let j = 0; j < this.size; j++) {
+    //     this.gameField[i].push(new Tile1024Component());
+    //   }
+    // }
     this.gameField = new Array(this.size).fill(null).map(() => new Array(this.size).fill(null).map(() => new Tile1024));
   }
 
   setHidden(i: number, j: number): boolean {
-    if (this.gameField[i][j].value === 0) {
-      return true;
-    }
-    return false;
+    return this.gameField[i][j].value === 0;
   }
 
   addRandomNumber(): void {
@@ -70,9 +78,6 @@ export class Game1024Component {
         validTile = true;
       }
     }
-
-
-
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -112,102 +117,68 @@ export class Game1024Component {
 
 
 
+  // handle and iterate from gpt
+  handleMove(direction: string): boolean {
+    const vectors: { [key: string]: Vector } = {
+      up: { x: 0, y: -1 },
+      down: { x: 0, y: 1 },
+      left: { x: -1, y: 0 },
+      right: { x: 1, y: 0 },
+    };
 
+    const vector: Vector = vectors[direction];
 
-  handleMove(direction: string) {
-    let movedOrMerged: boolean = false;
+    if (!vector) return false;
 
-    for (let i = 0; i < this.size; i++) {
-      const tempArray = this.makeTempArrayToRightBasedOnDirectionAndIndex(direction, i);
+    let moved = false;
+    let movedOrMerged;
 
-      let move = this.arrayCanMoveRight(tempArray);
-      while (move) {
-        this.arrayMoveRight(tempArray);
-        move = this.arrayCanMoveRight(tempArray);
-        movedOrMerged = true;
-      }
-      this.arrayMergeRight(tempArray);
+    do {
+      movedOrMerged = false;
+      this.iterateTiles((x, y) => {
+        if (!this.gameField[y][x].isEmpty()) {
+          const newX = x + vector.x;
+          const newY = y + vector.y;
 
-      this.switchFromRightTempArrayToGameFieldBasedOnDirectionAndIndex(direction, i, tempArray);
-    }
+          if (this.isInBounds(newX, newY)) {
+            if (this.gameField[y][x].mergeWith(this.gameField[newY][newX])) {
+              movedOrMerged = true;
+            } else if (this.gameField[newY][newX].isEmpty()) {
+              this.gameField[newY][newX].value = this.gameField[y][x].value;
+              this.gameField[y][x].value = 0;
+              movedOrMerged = true;
+            }
+          }
+        }
+      }, vector.x, vector.y);
 
-    return movedOrMerged;
+      moved = moved || movedOrMerged;
+    } while (movedOrMerged);
+
+    console.log(moved)
+    return moved;
   }
 
-  arrayCanMoveRight(array: ITile1024[]): boolean {
-    for (let i = 0; i < this.size - 1; i++) {
-      if (array[i].value > 0 && array[i + 1].value === 0) {
-        return true;
-      }
-    }
-    return false;
-  }
+  iterateTiles(callback: (x: number, y: number) => void, dx = 0, dy = 0): void {
+    const range = Array.from({ length: this.size }, (_, i) => i);
 
-  arrayMoveRight(array: ITile1024[]): void {
-    for (let i = 0; i < this.size - 1; i++) {
-      if (array[i].value > 0 && array[i + 1].value === 0) {
-        array[i + 1].value = array[i].value;
-        array[i].value = 0;
-        this.movedOrMerged = true;
+    if (dx > 0 || dy > 0) {
+      range.reverse();
+    }
+
+    for (const y of range) {
+      for (const x of range) {
+        callback(x, y);
       }
     }
   }
 
-  arrayMergeRight(array: ITile1024[]): void {
-    for (let i = this.size - 1; i > 0; i--) {
-      if (array[i].value > 0 && array[i].value === array[i - 1].value) {
-        array[i].value *= 2;
-        array[i - 1].value = 0;
-        this.movedOrMerged = true;
-      }
-    }
-    this.arrayMoveRight(array);
+  isInBounds(x: number, y: number): boolean {
+    return x >= 0 && x < this.size && y >= 0 && y < this.size;
   }
 
-  makeTempArrayToRightBasedOnDirectionAndIndex(direction: string, index: number): ITile1024[] {
-    let tempArray: ITile1024[] = [];
 
-    if (direction === "right") {
-      tempArray = this.gameField[index]
-    }
-    if (direction === "left") {
-      tempArray = this.gameField[index].reverse()
-    }
-    if (direction === "up") {
-      for (let i = 0; i < this.size; i++) {
-        tempArray.push(this.gameField[i][index])
-      }
-      tempArray = tempArray.reverse()
-    }
-    if (direction === "down") {
-      for (let i = 0; i < this.size; i++) {
-        tempArray.push(this.gameField[i][index])
-      }
-    }
-    return tempArray;
-  }
-
-  switchFromRightTempArrayToGameFieldBasedOnDirectionAndIndex(direction: string, index: number, tempArray: ITile1024[]): void {
-    if (direction === "right") {
-      this.gameField[index] = tempArray
-    }
-    if (direction === "left") {
-      this.gameField[index] = tempArray.reverse()
-    }
-    if (direction === "up") {
-      tempArray = tempArray.reverse()
-      for (let i = 0; i < this.size; i++) {
-        this.gameField[i][index] = tempArray[i]
-      }
-    }
-    if (direction === "down") {
-      for (let i = 0; i < this.size; i++) {
-        this.gameField[i][index] = tempArray[i]
-      }
-    }
-
-  }
-
+  // 
   isLost(): boolean {
     for (let i = 0; i < this.size; i++) {
       for (let j = 0; j < this.size; j++) {
@@ -278,13 +249,15 @@ export class Game1024Component {
     return biggestNumber;
   }
 
+
+
   debugClick(event: MouseEvent, x: number, y: number): void {
     if (event.shiftKey) {
       this.gameField[x][y].value === 0 ? this.gameField[x][y].value = 1 : this.gameField[x][y].value *= 2;
     }
   }
 
-  //
+  // controls
 
   dispatchKeyboardEvent(key: string): void {
     const event = new KeyboardEvent('keydown', { key });
@@ -320,6 +293,8 @@ export class Game1024Component {
       case 'right': this.isRightPressed = false; break;
     }
   }
+
+
 
 
 }

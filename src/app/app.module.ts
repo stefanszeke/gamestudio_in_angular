@@ -22,7 +22,7 @@ import { TictactoeComponent } from './tictactoe/tictactoe/tictactoe.component';
 import { BlocksFieldComponent } from './games/blocks/blocks-field/blocks-field.component';
 import { BlocksTileComponent } from './games/blocks/blocks-tile/blocks-tile.component';
 import { Game1024Component } from './games/game1024/game1024.component';
-import { Tile1024Component } from './games/game1024/tile1024/tile1024.component';
+import { Tile1024 } from './games/game1024/tile1024/tile1024.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { commentReducer } from './state/comment/comment.reducer';
@@ -46,7 +46,7 @@ import { RatingTableComponent } from './components/rating-table/rating-table.com
     BlocksFieldComponent,
     BlocksTileComponent,
     Game1024Component,
-    Tile1024Component,
+    Tile1024,
     CommentsTableComponent,
     RatingTableComponent
   ],

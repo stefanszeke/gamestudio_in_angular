@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ITile1024 } from './ITile1024';
 
 
 @Component({
@@ -6,10 +7,24 @@ import { Component, Input } from '@angular/core';
   templateUrl: './tile1024.component.html',
   styleUrls: ['./tile1024.component.scss']
 })
-export class Tile1024Component {
+export class Tile1024 implements ITile1024 {
   @Input() value: number = 0;
   @Input() hidden: boolean = true;
+
   class: string = 'tile';
+
+  isEmpty(): boolean {
+    return this.value === 0;
+  }
+
+  mergeWith(other: ITile1024): boolean {
+    if (this.value === other.value) {
+      this.value *= 2;
+      other.value = 0;
+      return true;
+    }
+    return false;
+  }
 
   getStyle(): string {
     if(!this.hidden) {
@@ -32,6 +47,5 @@ export class Tile1024Component {
     }
     return 'tile';
   }
-
 
 }
