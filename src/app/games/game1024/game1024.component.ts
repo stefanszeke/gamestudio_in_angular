@@ -92,7 +92,8 @@ export class Game1024Component {
 
     if (this.gameStatus !== "playing") return;
 
-    this.movedOrMerged = this.handleMove(direction);
+    this.movedOrMerged = false;
+    this.handleMove(direction);
 
     if (this.movedOrMerged) {
       this.addRandomNumber();
@@ -115,7 +116,7 @@ export class Game1024Component {
 
 
   handleMove(direction: string) {
-    let movedOrMerged: boolean = false;
+
 
     for (let i = 0; i < this.size; i++) {
       const tempArray = this.makeTempArrayToRightBasedOnDirectionAndIndex(direction, i);
@@ -124,14 +125,14 @@ export class Game1024Component {
       while (move) {
         this.arrayMoveRight(tempArray);
         move = this.arrayCanMoveRight(tempArray);
-        movedOrMerged = true;
+        this.movedOrMerged = true;
       }
       this.arrayMergeRight(tempArray);
 
       this.switchFromRightTempArrayToGameFieldBasedOnDirectionAndIndex(direction, i, tempArray);
     }
 
-    return movedOrMerged;
+
   }
 
   arrayCanMoveRight(array: ITile1024[]): boolean {
@@ -205,7 +206,6 @@ export class Game1024Component {
         this.gameField[i][index] = tempArray[i]
       }
     }
-
   }
 
   isLost(): boolean {
